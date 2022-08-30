@@ -34,16 +34,12 @@ public class ManageAgent extends AbstractClass {
      * Creates new form ManageAgent
      */
     
-    @Override
-    public void clearAll() {
-            id.setText(null);
-             name.setText(null);
-             due.setText(null);
-             contact.setText(null);
-    }
+
 
     public ManageAgent() {
+        //Constructor method
         initComponents();
+        //set window location to middle
         Toolkit toolkit = getToolkit();
         Dimension size = toolkit.getScreenSize();
         setLocation(size.width/2 - getWidth()/2, size.height/2 - getHeight()/2);
@@ -319,24 +315,34 @@ public class ManageAgent extends AbstractClass {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-     public void loadData(){
-          File f = new File("D:/PharmacyManagement/Files/AgentsData.txt");
+        @Override
+    public void clearAll() {
+         //override abstract method that will clear all input field after submit
+            id.setText(null);
+             name.setText(null);
+             due.setText(null);
+             contact.setText(null);
+    } 
+    public void loadData(){
+          File f = new File("D:/PharmacyManagement/Files/AgentsData.txt");//set file path
                 if(!f.exists()){
                      try {
-                         f.createNewFile();
+                         f.createNewFile();//creat new file if file not exist
                      } catch (IOException ex) {
                          Logger.getLogger(ManageAgent.class.getName()).log(Level.SEVERE, null, ex);
                      }
 
                 }
         try {
+              //read data from file
           FileReader   fr = new FileReader(f);
            BufferedReader br = new BufferedReader(fr);
         DefaultTableModel dtm = (DefaultTableModel)jTable1.getModel();
         Object[] lines = br.lines().toArray();
+        //read the file line by line till the last
         for(int i = 0; i<lines.length; i++){
-            String[] row = lines[i].toString().split(",");
-            dtm.addRow(row);
+            String[] row = lines[i].toString().split(",");//split line by ","
+            dtm.addRow(row);//add row on table
         }
         } catch (FileNotFoundException ex) {
             Logger.getLogger(ManageAgent.class.getName()).log(Level.SEVERE, null, ex);
@@ -369,14 +375,16 @@ public class ManageAgent extends AbstractClass {
        String cont = contact.getText();
        DefaultTableModel dt = (DefaultTableModel)jTable1.getModel();
        String[] toadd = {aId, cName, tDue,cont};
-       dt.addRow(toadd);
+       dt.addRow(toadd);//add new row
        ManageMedicine mm = new ManageMedicine();
-        mm.setComboBoxData();
+        mm.setComboBoxData();//set combo box data for manage medicine page
        try{
+           //if all the input field fill submit button will perform successfully
             if(!"".equals(id) && !"".equals(name) && !"".equals(tDue) && !"".equals(cont)){
             setData();
             JOptionPane.showMessageDialog(this, "Agent Data Store Successfully");
             }else{
+                 //if any of input field not fill submit button will not perform successfully
              JOptionPane.showMessageDialog(this, "Please Fill All The Field");
             }
         } catch (IOException ex) {
@@ -389,7 +397,7 @@ public class ManageAgent extends AbstractClass {
     
     
     private void updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateActionPerformed
-
+        //update selected row
        String aId = id.getText();
        String cName = name.getText();
        String tDue = due.getText();
@@ -406,7 +414,7 @@ public class ManageAgent extends AbstractClass {
     }//GEN-LAST:event_updateActionPerformed
 
     private void removeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeActionPerformed
-
+         //remove selected row
         DefaultTableModel dtm = (DefaultTableModel)jTable1.getModel();
             int index = jTable1.getSelectedRow();
             dtm.removeRow(index);
@@ -423,7 +431,7 @@ public class ManageAgent extends AbstractClass {
     }//GEN-LAST:event_clearActionPerformed
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
-
+        //select a row by mouse click
         DefaultTableModel dtm = (DefaultTableModel)jTable1.getModel();
         int index = jTable1.getSelectedRow();
         id.setText(dtm.getValueAt(index,0).toString());

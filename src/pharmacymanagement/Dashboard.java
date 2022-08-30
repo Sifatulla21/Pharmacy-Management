@@ -20,8 +20,10 @@ public class Dashboard extends AbstractClass {
      * Creates new form Dashboard
      */
     public Dashboard() {
+        //Constructor method
         initComponents();
-                Toolkit toolkit = getToolkit();
+        //set window location to middle
+        Toolkit toolkit = getToolkit();
         Dimension size = toolkit.getScreenSize();
         setLocation(size.width/2 - getWidth()/2, size.height/2 - getHeight()/2);
     }
@@ -154,17 +156,17 @@ public class Dashboard extends AbstractClass {
     }// </editor-fold>//GEN-END:initComponents
 
     private void manageAgentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manageAgentActionPerformed
-
+        //manage agent page will open
         manageAgentButton();
     }//GEN-LAST:event_manageAgentActionPerformed
 
     private void checkExpDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkExpDateActionPerformed
-
+        //check expiry date page will open
         checkExpDateButton();
     }//GEN-LAST:event_checkExpDateActionPerformed
 
     private void manageMedicineActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manageMedicineActionPerformed
-
+        //manage medicine page will open
         manageMedicineButton();
 
         // TODO add your handling code here:

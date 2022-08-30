@@ -30,7 +30,9 @@ public class ExpDate extends AbstractClass {
     
 
     public ExpDate() {
+        //Constructor method
         initComponents();
+        //set window location to middle
         Toolkit toolkit = getToolkit();
         Dimension size = toolkit.getScreenSize();
         setLocation(size.width/2 - getWidth()/2, size.height/2 - getHeight()/2);
@@ -201,14 +203,15 @@ public class ExpDate extends AbstractClass {
     }// </editor-fold>//GEN-END:initComponents
 
     private void manageAgentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manageAgentActionPerformed
+        //manage agent page will open
         manageAgentButton();
         
         // TODO add your handling code here:
     }//GEN-LAST:event_manageAgentActionPerformed
 
     private void dashboardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dashboardActionPerformed
-
-                    dashBoardButtontn();
+        //dashboard page will open
+         dashBoardButtontn();
         // TODO add your handling code here:
     }//GEN-LAST:event_dashboardActionPerformed
 
@@ -217,16 +220,17 @@ public class ExpDate extends AbstractClass {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void manageMedicineActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manageMedicineActionPerformed
-
+        //manage medicine page will open
         manageMedicineButton();
         // TODO add your handling code here:
     }//GEN-LAST:event_manageMedicineActionPerformed
 
         public void validateDate() throws IOException{
-        File f = new File("D:/PharmacyManagement/Files/MedicineData.txt");
+            //method for validate expiry date
+        File f = new File("D:/PharmacyManagement/Files/MedicineData.txt"); //set file path
                 if(!f.exists()){
                      try {
-                         f.createNewFile();
+                         f.createNewFile();//creat new file if file not exist
                      } catch (IOException ex) {
                          Logger.getLogger(ManageMedicine.class.getName()).log(Level.SEVERE, null, ex);
                      }
@@ -234,18 +238,20 @@ public class ExpDate extends AbstractClass {
                 }
                 
         try {
-          FileReader   fr = new FileReader(f);
-           BufferedReader br = new BufferedReader(fr);
+            //read data from file
+        FileReader   fr = new FileReader(f);
+        BufferedReader br = new BufferedReader(fr);
         DefaultTableModel dtm = (DefaultTableModel)jTable1.getModel();
         Object[] lines = br.lines().toArray();
-
+        //read the file line by line till the last
         for(int i = 0; i<lines.length; i++){
-            String[] row = lines[i].toString().split(",");
-            String expDateData = row[6];
-            LocalDate todaysDate = LocalDate.now();
-            LocalDate expDate = LocalDate.parse((String)expDateData.toString());
+            String[] row = lines[i].toString().split(","); //split line by ","
+            String expDateData = row[6]; //select 6th row where expiry date store
+            LocalDate todaysDate = LocalDate.now(); //todays date
+            LocalDate expDate = LocalDate.parse((String)expDateData.toString()); //expiry date
+            //check difference between two date
             if(ChronoUnit.DAYS.between(todaysDate, expDate) < 30){
-                dtm.addRow(row);
+                dtm.addRow(row);//add those medicines whose expiry date will finish within 30 days
             }
             
         }

@@ -22,14 +22,16 @@ import javax.swing.JOptionPane;
  *
  * @author USER
  */
-public class Registration extends javax.swing.JFrame{
+public class Registration extends AbstractClass{
 
     /**
      * Creates new form Registration
      */
     public Registration() {
+        //Constructor method
         initComponents();
-        setExtendedState(JFrame.MAXIMIZED_BOTH);
+        setExtendedState(JFrame.MAXIMIZED_BOTH);        //open the frame full size
+        //set window location to middle
         Toolkit toolkit = getToolkit();
         Dimension size = toolkit.getScreenSize();
         setLocation(size.width/2 - getWidth()/2, size.height/2 - getHeight()/2);
@@ -239,26 +241,33 @@ public class Registration extends javax.swing.JFrame{
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void resetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetActionPerformed
+    @Override
+    public void clearAll() {
+        //override abstract method that will clear all input field after submit
         userName.setText(null);
         password.setText(null);
         contact.setText(null);
+    }
+    private void resetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetActionPerformed
+        this.clearAll();
     }//GEN-LAST:event_resetActionPerformed
 
     public void setData() throws IOException{
-        File f = new File("D:/PharmacyManagement/Files/UserData.txt");
+        File f = new File("D:/PharmacyManagement/Files/UserData.txt");//set file path
         if(!f.exists()){
-            f.createNewFile();
+            f.createNewFile();//creat new file if file not exist
         }
+         //read data from file
         BufferedReader br = new BufferedReader(new FileReader(f));
         Object[] Lines = br.lines().toArray();
         int id = 1;
+         //read the file line by line till the last
         for(int i = 0; i<Lines.length;i++){
             String Line = Lines[i].toString().trim();
-            String[] Row = Line.split(",");
-            id = Integer.parseInt(Row[0])+1;      
+            String[] Row = Line.split(",");//split line by ","
+            id = Integer.parseInt(Row[0])+1;  //give id to every new user    
         }
+        //write into file
         FileWriter fw = new FileWriter(f,true);
         BufferedWriter bw = new BufferedWriter(fw);
         PrintWriter pw = new PrintWriter(bw);
@@ -277,13 +286,13 @@ public class Registration extends javax.swing.JFrame{
 
     private void submit1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submit1ActionPerformed
         try{
+            //if all the input field fill submit button will perform successfully
             if(!"".equals(userName.getText()) && !"".equals(password.getText()) && !"".equals(contact.getText())){
             setData();
             JOptionPane.showMessageDialog(this, "User Registered Successfully");
-             userName.setText(null);
-             password.setText(null);
-             contact.setText(null);
+             this.clearAll();
             }else{
+                 //if any of input field not fill submit button will not perform successfully
              JOptionPane.showMessageDialog(this, "Please Fill All The Field");
             }
         } catch (IOException ex) {
@@ -293,9 +302,7 @@ public class Registration extends javax.swing.JFrame{
     }//GEN-LAST:event_submit1ActionPerformed
 
     private void loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginActionPerformed
-                    Login l = new Login();
-                    l.setVisible(true);
-                    this.setVisible(false);
+                   login();
     // TODO add your handling code here:
     }//GEN-LAST:event_loginActionPerformed
 
@@ -353,4 +360,5 @@ public class Registration extends javax.swing.JFrame{
     private javax.swing.JButton submit1;
     private javax.swing.JTextField userName;
     // End of variables declaration//GEN-END:variables
+
 }

@@ -34,20 +34,13 @@ public class ManageMedicine extends AbstractClass {
      * Creates new form ManageMedicine
      */
     
-    @Override
-    public void clearAll() {
-             id.setText(null);
-             name.setText(null);
-             price.setText(null);
-             place.setText(null);
-             quantity.setText(null);
-             company.setSelectedItem(null);
-             expDate.setCalendar(null);
-    }
+
 
     public ManageMedicine() {
+        //Constructor method
         initComponents();
-        setComboBoxData();
+        setComboBoxData();//set combo box data dynamically
+        //set window location to middle
         Toolkit toolkit = getToolkit();
         Dimension size = toolkit.getScreenSize();
         setLocation(size.width/2 - getWidth()/2, size.height/2 - getHeight()/2);
@@ -385,24 +378,37 @@ public class ManageMedicine extends AbstractClass {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+       @Override
+    public void clearAll() {
+         //override abstract method that will clear all input field after submit
+             id.setText(null);
+             name.setText(null);
+             price.setText(null);
+             place.setText(null);
+             quantity.setText(null);
+             company.setSelectedItem(null);
+             expDate.setCalendar(null);
+    }
     public void loadData(){
-                         File f = new File("D:/PharmacyManagement/Files/MedicineData.txt");
+                         File f = new File("D:/PharmacyManagement/Files/MedicineData.txt");//set file path
                 if(!f.exists()){
                      try {
-                         f.createNewFile();
+                         f.createNewFile();//creat new file if file not exist
                      } catch (IOException ex) {
                          Logger.getLogger(ManageMedicine.class.getName()).log(Level.SEVERE, null, ex);
                      }
 
                 }
         try {
+              //read data from file
           FileReader   fr = new FileReader(f);
            BufferedReader br = new BufferedReader(fr);
         DefaultTableModel dtm = (DefaultTableModel)jTable1.getModel();
         Object[] lines = br.lines().toArray();
+        //read the file line by line till the last
         for(int i = 0; i<lines.length; i++){
-            String[] row = lines[i].toString().split(",");
-            dtm.addRow(row);
+            String[] row = lines[i].toString().split(",");//split line by ","
+            dtm.addRow(row);//add row on table
         }
         } catch (FileNotFoundException ex) {
             Logger.getLogger(ManageMedicine.class.getName()).log(Level.SEVERE, null, ex);
@@ -410,20 +416,23 @@ public class ManageMedicine extends AbstractClass {
     
     }
     public void setData() throws IOException{
-        File f = new File("D:/PharmacyManagement/Files/MedicineData.txt");
+        File f = new File("D:/PharmacyManagement/Files/MedicineData.txt");//set file path
         if(!f.exists()){
-            f.createNewFile();
+            f.createNewFile();//creat new file if file not exist
         }
+         //read data from file
         BufferedReader br = new BufferedReader(new FileReader(f));
         Object[] Lines = br.lines().toArray();
+        //read the file line by line till the last
         for(int i = 0; i<Lines.length;i++){
             String Line = Lines[i].toString().trim();
-            String[] Row = Line.split(",");     
+            String[] Row = Line.split(",");    //split line by "," 
         }
+        //write into file
         FileWriter fw = new FileWriter(f,true);
         BufferedWriter bw = new BufferedWriter(fw);
         PrintWriter pw = new PrintWriter(bw);
-        SimpleDateFormat sdf = new SimpleDateFormat("yyy-MM-dd");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyy-MM-dd");//set date formate
         String date = sdf.format(expDate.getDate());
         pw.println(id.getText()+ "," +name.getText()+ "," +price.getText()+ "," +place.getText()+ "," +quantity.getText()+ "," +company.getSelectedItem()+ "," +date);
         pw.flush();
@@ -450,7 +459,7 @@ public class ManageMedicine extends AbstractClass {
         for(int i = 0; i<lines.length; i++){
             String[] row = lines[i].toString().split(",");
             String combo = row[1];
-            company.addItem(combo);
+            company.addItem(combo);//add iteam on company name
             
         }
         } catch (FileNotFoundException ex) {
@@ -468,13 +477,15 @@ public class ManageMedicine extends AbstractClass {
        String date = sdf.format(expDate.getDate());
        DefaultTableModel dt = (DefaultTableModel)jTable1.getModel();
        String[] toadd = {mId, mName, mPrice, mPlace, mQuantity, sCompany, date};
-       dt.addRow(toadd);
+       dt.addRow(toadd);//add new row
        try{
+           //if all the input field fill submit button will perform successfully
             if(!"".equals(id) && !"".equals(mName) && !"".equals(mPrice) && !"".equals(mPlace) && !"".equals(mQuantity) && !"".equals(sCompany) && !"".equals(date)){
             setData();
             JOptionPane.showMessageDialog(this, "Medicine Data Store Successfully");
             this.clearAll();
             }else{
+                 //if any of input field not fill submit button will not perform successfully
              JOptionPane.showMessageDialog(this, "Please Fill All The Field");
             }
         } catch (IOException ex) {
@@ -491,7 +502,7 @@ public class ManageMedicine extends AbstractClass {
     }//GEN-LAST:event_clearActionPerformed
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
-
+        //select a row by mouse click
         try {
             DefaultTableModel dtm = (DefaultTableModel)jTable1.getModel();
             int index = jTable1.getSelectedRow();
@@ -510,7 +521,7 @@ public class ManageMedicine extends AbstractClass {
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void removeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeActionPerformed
-
+            //remove selected row
             DefaultTableModel dtm = (DefaultTableModel)jTable1.getModel();
             int index = jTable1.getSelectedRow();
             dtm.removeRow(index);
@@ -521,7 +532,7 @@ public class ManageMedicine extends AbstractClass {
     }//GEN-LAST:event_removeActionPerformed
 
     private void updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateActionPerformed
-
+        //update selected row
        String mId = id.getText();
        String mName = name.getText();
        String mPrice = price.getText();
@@ -532,7 +543,7 @@ public class ManageMedicine extends AbstractClass {
        String date = sdf.format(expDate.getDate());
        DefaultTableModel dt = (DefaultTableModel)jTable1.getModel();
        int index = jTable1.getSelectedRow();
-       dt.setValueAt(id, index, 0);
+       dt.setValueAt(mId, index, 0);
        dt.setValueAt(mName, index, 1);
        dt.setValueAt(mPrice, index, 2);
        dt.setValueAt(mPlace, index, 3);

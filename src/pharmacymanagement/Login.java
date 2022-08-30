@@ -18,14 +18,16 @@ import javax.swing.JOptionPane;
  *
  * @author USER
  */
-public class Login extends javax.swing.JFrame {
+public class Login extends AbstractClass {
 
     /**
      * Creates new form Login
      */
     public Login() {
+        //Constructor method
         initComponents();
-                Toolkit toolkit = getToolkit();
+        //set window location to middle
+        Toolkit toolkit = getToolkit();
         Dimension size = toolkit.getScreenSize();
         setLocation(size.width/2 - getWidth()/2, size.height/2 - getHeight()/2);
     }
@@ -165,23 +167,24 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_loginActionPerformed
 
     private void registrationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registrationActionPerformed
-            
-                    Registration r = new Registration();
-                    r.setVisible(true);
-                    this.setVisible(false);
+                    //open registration page
+                   registration();
     // TODO add your handling code here:
     }//GEN-LAST:event_registrationActionPerformed
     public boolean varifyUser() throws IOException{
-        File f = new File("D:/PharmacyManagement/Files/UserData.txt");
+        File f = new File("D:/PharmacyManagement/Files/UserData.txt");//set file path
         if(!f.exists()){
-            f.createNewFile();
+            f.createNewFile();//creat new file if file not exist
         }
+        //read data from file
         BufferedReader br = new BufferedReader(new FileReader(f));
         Object[] Lines = br.lines().toArray();
         int i = 0;
+        //read the file line by line till the last
         for(i = 0; i<Lines.length; i++){
             String Line = Lines[i].toString().trim();
-            String[] Row = Line.split(",");
+            String[] Row = Line.split(",");//split line by ","
+            //match username and password
             if(userName.getText().equals(Row[1]) && password.getText().equals(Row[2])){
                 return true;
             }
@@ -193,11 +196,10 @@ public class Login extends javax.swing.JFrame {
     }
     private void loginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginMouseClicked
              try{
+                 //login to dashboard if username and password match
                 if(varifyUser() == true){
                     JOptionPane.showMessageDialog(this, "User Logged in Successfully");
-                    Dashboard db = new Dashboard();
-                    db.setVisible(true);
-                    this.setVisible(false);
+                    dashBoardButtontn();
                 
                 }else{
                     JOptionPane.showMessageDialog(this, "Incorrect Credentials. Please Try Again");
@@ -256,4 +258,9 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JButton registration;
     private javax.swing.JTextField userName;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void clearAll() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

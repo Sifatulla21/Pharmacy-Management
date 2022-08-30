@@ -15,9 +15,12 @@ import java.util.logging.Logger;
 public class Buttons extends javax.swing.JFrame {
 
     /**
-     * Creates new form AllClass
+     * Creates new form Buttons
      */
     public Buttons() {
+        /**
+         * This is constructor
+         */
         initComponents();
     }
 
@@ -45,13 +48,38 @@ public class Buttons extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+        public void login(){
+            /**
+             * This method is for login button.
+             * After click this button login page will open
+             */
+             Login l = new Login();
+             l.setVisible(true);
+             this.setVisible(false);
+        }
+        public void registration(){
+            /**
+             * This method is for registration button.
+             * After click this button registration page will open
+             */
+             Registration r = new Registration();
+             r.setVisible(true);
+             this.setVisible(false);
+        }
         public void dashBoardButtontn(){
+            /**
+             * This method is for dashboard button.
+             * After click this button dashboard page will open
+             */
                     Dashboard db = new Dashboard();
                     db.setVisible(true);
                     this.setVisible(false);
     }
     public void checkExpDateButton(){
+             /**
+             * This method is for expiry date check button.
+             * After click this button expiry date page will open
+             */
                      ExpDate exp = new ExpDate();
         try {
             exp.validateDate();
@@ -62,12 +90,20 @@ public class Buttons extends javax.swing.JFrame {
         this.setVisible(false);
     }
     public void manageMedicineButton(){
+             /**
+             * This method is for manage medicine button.
+             * After click this button manage medicine page will open
+             */
         ManageMedicine mm = new ManageMedicine();
         mm.loadData();
         mm.setVisible(true);
         this.setVisible(false);
     }
     public void manageAgentButton(){
+             /**
+             * This method is for manage agent button.
+             * After click this button manage agent page will open
+             */
         ManageAgent ma = new ManageAgent();
         ma.loadData();
         ma.setVisible(true);
